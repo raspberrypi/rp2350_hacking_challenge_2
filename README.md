@@ -41,11 +41,11 @@ Please email us via [doh@raspberrypi.com](mailto:doh@raspberrypi.com)
 
 In this repository you can find a full, already instrumentalized example of our AES implementation:
 
-- aes.S contains the same implementation that you can also find in [Picotool](https://github.com/raspberrypi/picotool/blob/develop/enc_bootloader/aes.S) - with some minor patches to make it run from regular flash
-- rp2350_hacking_challenge_2.c contains a small example program that calls into the AES implementation and already provides a trigger for your initial SCA needs
+- The provided aes.S has been modified slightly from the version used by the bootloader [Picotool](https://github.com/raspberrypi/picotool/blob/develop/enc_bootloader/aes.S), to make it easier to set up and run from regular flash
+- rp2350_hacking_challenge_2.c contains a small example program that calls into this AES implementation and already provides a trigger for your initial SCA needs
 - If you want to trigger somewhere within the assembly, you can simply add "bl trigger" into the assembly
 
-**Note:**: The implementation included in the example code has some fault-injection hardening checks removed and is modified to make side-channel measurements easier. Attacks should work against the code as used by the bootloader.
+**Note:**: The AES implementation provided here has some fault-injection hardening checks removed and is modified to make side-channel measurements easier. Attacks should also work against the real code when used in the bootloader.
 
 ## Keytool
 
