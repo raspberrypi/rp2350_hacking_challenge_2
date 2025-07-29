@@ -8,7 +8,7 @@ Watch our quick explainer video:
 
 Our first [Hacking Challenge](https://github.com/raspberrypi/rp2350_hacking_challenge) back in 2024 was both enlightening and enjoyable for us, and garnered positive feedback from the participants and onlookers, so we decided to do it once more 🙃
 
-This second Hacking Challenge focuses on side-channel analysis of a RP2350 running a sample app using our newly developed self-decrypting (AES) binary support.
+This second Hacking Challenge focuses on side-channel analysis of the encrypted boot of the RP2350, using our newly developed self-decrypting (AES) binary support.
 
 This new support was developed to allow customers to encrypt their application code and data when stored in external flash, and have these loaded into internal SRAM, where our AES software library will decrypt the application in place, using key material and salt squirreled away in the OTP.
 
@@ -47,7 +47,7 @@ In this repository you can find a full, already instrumentalized example of our 
 - If you want to trigger somewhere within the assembly, you can simply add "bl trigger" into the assembly
 
 
-**Note:**: The implementation shared in the example code has some fault-injection hardening checks removed and is mainly for making side-channel measurements easier. Attacks - especially when based on FI - should work against the code as used by the bootloader.
+**Note:**: The implementation shared in the example code has some fault-injection hardening checks removed and is mainly for making side-channel measurements easier. Attacks should work against the code as used by the bootloader.
 
 ## Keytool
 
