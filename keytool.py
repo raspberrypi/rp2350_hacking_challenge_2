@@ -12,22 +12,24 @@ CLI
 ---
 Encode a 32‑byte key (64 hex chars) into the layout above:
 
-    python xor_split.py encode 0123456789abcdeffedcba9876543210\
+    python3 keytool.py encode 0123456789abcdeffedcba9876543210\
                              00112233445566778899aabbccddeeff
 
 Same, but emit as a C‑style escaped string (two lines = two 64‑byte blocks):
 
-    python xor_split.py encode <key‑hex> -c
+    python3 keytool.py -c encode <key‑hex>
 
 Decode the two 64‑byte blocks back into the key:
 
-    python xor_split.py decode <block0‑hex> <block1‑hex>
-    python xor_split.py decode <block0‑hex> <block1‑hex> --c-array
+    python3 keytool.py decode <block0‑hex> <block1‑hex>
+    python3 keytool.py --c-array decode <block0‑hex> <block1‑hex>
+    python3 keytool.py decode "<block0‑c-style-hex>" "<block1‑c-style-hex>"
 """
 
 import os
 import sys
 import argparse
+import re
 from functools import reduce
 from typing import List, Tuple
 
@@ -54,6 +56,21 @@ def to_c_array(data: bytes) -> str:
     return "".join(f"\\x{b:02x}" for b in data)
 
 
+def from_c_array(data: str) -> bytes:
+    """Convert an escaped C‑style hex string to raw bytes."""
+    return bytes(int(re.match(r'^\\x([0-9a-f]{2})$', data[i:i+4]).group(1), 16) for i in range(0, len(data), 4))
+
+
+def to_hex_string(data: bytes) -> str:
+    """Convert raw bytes to a hexadecimal string."""
+    return data.hex()
+
+
+def from_hex_string(data: str) -> bytes:
+    """Convert a hexadecimal string to raw bytes."""
+    return bytes.fromhex(data)
+
+
 # ---------- core ------------------------------------------------------------
 
 def encode(key_hex: str) -> Tuple[bytes, bytes]:
@@ -64,10 +81,16 @@ def encode(key_hex: str) -> Tuple[bytes, bytes]:
         ---------------------------------------------------
         a0 b0 c0 d0 ... a3 b3 c3 d3       a4 ... d7
     """
-    try:
-        key = bytes.fromhex(key_hex)
-    except ValueError:
-        raise ValueError("Key must be valid hexadecimal.")
+    if key_hex[:2] == r'\x':
+        try:
+            key = from_c_array(key_hex)
+        except AttributeError:
+            raise ValueError("Key must be valid C‑style hex string.")
+    else:
+        try:
+            key = from_hex_string(key_hex)
+        except ValueError:
+            raise ValueError("Key must be valid hexadecimal.")
 
     if len(key) != WORD * WORDS:
         raise ValueError("Key must be exactly 32 bytes (64 hex characters).")
@@ -93,10 +116,16 @@ def decode(blocks_hex: List[str]) -> bytes:
     if len(blocks_hex) != 2:
         raise ValueError("Exactly two blocks (block0, block1) are required.")
 
-    try:
-        block0, block1 = (bytes.fromhex(h) for h in blocks_hex)
-    except ValueError:
-        raise ValueError("Blocks must be valid hexadecimal.")
+    if blocks_hex[0][:2] == r'\x':
+        try:
+            block0, block1 = (from_c_array(h) for h in blocks_hex)
+        except AttributeError:
+            raise ValueError("Blocks must be valid C‑style hex string.")
+    else:
+        try:
+            block0, block1 = (from_hex_string(h) for h in blocks_hex)
+        except ValueError:
+            raise ValueError("Blocks must be valid hexadecimal.")
 
     if len(block0) != BLOCK or len(block1) != BLOCK:
         raise ValueError("Each block must be exactly 64 bytes (128 hex characters).")
@@ -128,7 +157,11 @@ def main() -> None:
         help="output in C‑style escaped hex (\\x00\\x11...)",
     )
 
-    subparsers = parser.add_subparsers(dest="command", required=True)
+    try:
+        subparsers = parser.add_subparsers(dest="command", required=True)
+    except TypeError:
+        print(f"Please use Python 3.7 or newer", file=sys.stderr)
+        sys.exit(1)
 
     enc = subparsers.add_parser("encode", help="split key into shares")
     enc.add_argument("key_hex", metavar="KEY", help="64‑hex‑character key")
@@ -140,20 +173,21 @@ def main() -> None:
 
     args = parser.parse_args()
 
+    if args.c_array:
+        # Escaped C‑style hex string(s)
+        output_function = to_c_array
+    else:
+        # Plain hexadecimal string(s)
+        output_function = to_hex_string
+
     try:
         if args.command == "encode":
             block0, block1 = encode(args.key_hex)
-            if args.c_array:
-                # Print each 64‑byte block as a standalone escaped string
-                print(to_c_array(block0))
-                print(to_c_array(block1))
-            else:
-                # Raw lowercase hex, one line per block
-                print(block0.hex())
-                print(block1.hex())
+            print(output_function(block0))
+            print(output_function(block1))
         elif args.command == "decode":
             key = decode(args.blocks)
-            print(to_c_array(key) if args.c_array else key.hex())
+            print(output_function(key))
     except ValueError as exc:
         print(f"Error: {exc}", file=sys.stderr)
         sys.exit(1)
