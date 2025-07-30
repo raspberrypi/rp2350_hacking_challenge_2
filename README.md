@@ -90,7 +90,7 @@ Please see [here](aes_report_monospace.md) for a detailed report into the AES ha
 ## Acknowledgements
 A big thank you to the following folks:
 - Mark Owen for his initial implementation.
-- Alex Selby for his work hardening the implementation against SCA.
+- Alex Selby for his work hardening the implementation against SCA by power analysis.
 - Thomas Roth and his team at [Hextree](https://www.hextree.io) whom very kindly helped test and develop this second challenge.
 - Colin O'Flynn and his team at NewAE for their help and fantastic [ChipWhisperer](https://www.newae.com/chipwhisperer) setup.
 
