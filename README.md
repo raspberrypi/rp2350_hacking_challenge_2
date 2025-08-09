@@ -4,6 +4,8 @@ Welcome to the *second* Raspberry Pi RP2350 hacking challenge!
 
 Watch our quick explainer video:
 
+Updated 8th Aug 2025 to clarify scope.
+
 [![](assets/video.png)](https://hextree.io/rp2350-hacking-challenge-2)
 
 Our first [Hacking Challenge](https://github.com/raspberrypi/rp2350_hacking_challenge) back in 2024 was both enlightening and enjoyable for us, and garnered positive feedback from the participants and onlookers, so we decided to do it once more 🙃
@@ -28,12 +30,19 @@ Unlike the first challenge, we're running this one as a "first across the line" 
 (Feel free to email us at [doh@raspberrypi.com](mailto:doh@raspberrypi.com) with ideas or questions on what could be in scope)
 	
 ## Out of scope:
+- Fault Injection
 - Optical / PVC / SEM attacks on the OTP contents or control logic (You know who you are :-P )
 - Modifying the provided AES implementation in a way that weakens it
 - Using any of the known glitching bugs reported in A2 / A3 silicon to access OTP contents
 
+**Note:** The AES implementation provided in this repository has had some fault-injection hardening removed and is 
+otherwise modified to make both side-channel measurements, and playing with the code easier. A winning method must 
+also be possible using the actual self-decrytping binary/bootloader on a secured (i.e. debug disabled, 
+secure boot enabled) RP2350 device.
+
 ## How to report findings
 If you think you're onto something that looks promising, we'd like to hear from you early.
+
 We'll be looking for you to be able to articulate your findings and any hypotheses you may have, but don't feel like you have to write a dissertation before you get in touch!  
 Please email us via [doh@raspberrypi.com](mailto:doh@raspberrypi.com)
 
@@ -45,7 +54,9 @@ In this repository you can find a full, already instrumentalized example of our 
 - rp2350_hacking_challenge_2.c contains a small example program that calls into this AES implementation and already provides a trigger for your initial SCA needs
 - If you want to trigger somewhere within the assembly, you can simply add "bl trigger" into the assembly
 
-**Note:**: The AES implementation provided here has some fault-injection hardening checks removed and is modified to make side-channel measurements easier. Attacks should also work against the real code when used in the bootloader.
+
+
+**Note:**
 
 ## Keytool
 
