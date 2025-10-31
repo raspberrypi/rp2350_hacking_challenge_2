@@ -2,9 +2,14 @@
 
 Welcome to the *second* Raspberry Pi RP2350 hacking challenge!
 
-Watch our quick explainer video:
+## Update October 31st 2025
+We've not received a winning submission yet, but we know of some teams and individuals still working on the challenge so we've decided to extend the deadline for submissions till the end of 2025. The prize remains unchanged at $20,000.  
+Happy hacking!
 
-Updated 8th Aug 2025 to clarify scope.
+
+## Updated 8th Aug 2025 to clarify scope.
+
+Watch our quick explainer video:
 
 [![](assets/video.png)](https://hextree.io/rp2350-hacking-challenge-2)
 
