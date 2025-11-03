@@ -2,6 +2,13 @@
 
 Welcome to the *second* Raspberry Pi RP2350 hacking challenge!
 
+## Update October 31st 2025
+We've not received a winning submission yet, but we know of some teams and individuals still working on the challenge so we've decided to extend the deadline for submissions till the end of 2025. The prize remains unchanged at $20,000.  
+Happy hacking!
+
+
+## Updated 8th Aug 2025 to clarify scope.
+
 Watch our quick explainer video:
 
 [![](assets/video.png)](https://hextree.io/rp2350-hacking-challenge-2)
@@ -28,9 +35,15 @@ Unlike the first challenge, we're running this one as a "first across the line" 
 (Feel free to email us at [doh@raspberrypi.com](mailto:doh@raspberrypi.com) with ideas or questions on what could be in scope)
 	
 ## Out of scope:
+- Fault Injection
 - Optical / PVC / SEM attacks on the OTP contents or control logic (You know who you are :-P )
 - Modifying the provided AES implementation in a way that weakens it
 - Using any of the known glitching bugs reported in A2 / A3 silicon to access OTP contents
+
+**Note:** The AES implementation provided in this repository has had some fault-injection hardening removed and is 
+otherwise modified to make both side-channel measurements, and playing with the code easier. A winning method must 
+also be possible using the actual self-decrytping binary/bootloader on a secured (i.e. debug disabled, 
+secure boot enabled) RP2350 device.
 
 ## How to report findings
 If you think you're onto something that looks promising, we'd like to hear from you early.
@@ -45,7 +58,9 @@ In this repository you can find a full, already instrumentalized example of our 
 - `rp2350_hacking_challenge_2.c` contains a small example program that calls into this AES implementation and already provides a trigger for your initial SCA needs
 - If you want to trigger somewhere within the assembly, you can simply add "bl trigger" into the assembly
 
-**Note:**: The AES implementation provided here has some fault-injection hardening checks removed and is modified to make side-channel measurements easier. Attacks should also work against the real code when used in the bootloader.
+
+
+**Note:**
 
 ## Keytool
 
@@ -104,7 +119,7 @@ Please see [here](aes_report_monospace.md) for a detailed report into the AES ha
 ## Acknowledgements
 A big thank you to the following folks:
 - Mark Owen for his initial implementation.
-- Alex Selby for his work hardening the implementation against SCA.
+- Alex Selby for his work hardening the implementation against SCA by power analysis.
 - Thomas Roth and his team at [Hextree](https://www.hextree.io) whom very kindly helped test and develop this second challenge.
 - Colin O'Flynn and his team at NewAE for their help and fantastic [ChipWhisperer](https://www.newae.com/chipwhisperer) setup.
 
