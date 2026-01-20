@@ -2,6 +2,14 @@
 
 Welcome to the *second* Raspberry Pi RP2350 hacking challenge!
 
+## Update January 20st 2026
+As we've not received a winning submission AND know that some people are still working on the challenge we've decided to evolve
+the challenge a bit:
+
+- We removed randomization (through setting ST_VPERM, CT_BPERM & RK_ROR to 0)
+- We've removed the jitter which impacts the trace timing (Setting RC_JITTER, SH_JITTER and CK_JITTER to 0)
+- We've added an emulated version of the AES implementation to make building virtual power-analysis setups easier
+
 ## Update October 31st 2025
 We've not received a winning submission yet, but we know of some teams and individuals still working on the challenge so we've decided to extend the deadline for submissions till the end of 2025. The prize remains unchanged at $20,000.  
 Happy hacking!

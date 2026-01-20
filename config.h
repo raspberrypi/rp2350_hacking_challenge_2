@@ -13,13 +13,13 @@
 #define ST_SHAREC            1         // This creates a partial extra share at almost no extra cost
 #endif
 #ifndef ST_VPERM
-#define ST_VPERM             1         // insert random vertical permutations in state during de/encryption?
+#define ST_VPERM             0         // insert random vertical permutations in state during de/encryption?
 #endif
 #ifndef CT_BPERM
-#define CT_BPERM             1         // process blocks in a random order in counter mode?
+#define CT_BPERM             0         // process blocks in a random order in counter mode?
 #endif
 #ifndef RK_ROR
-#define RK_ROR               1         // store round key shares with random rotations within each word
+#define RK_ROR               0         // store round key shares with random rotations within each word
 #endif
 
 #ifndef WIPE_MEMORY
@@ -47,11 +47,11 @@
 #endif
 
 #ifndef SH_JITTER
-#define SH_JITTER            1         // Insert random delays, tagged onto SHA RNG
+#define SH_JITTER            0         // Insert random delays, tagged onto SHA RNG
 #endif
 
 #ifndef CK_JITTER
-#define CK_JITTER            1         // Use the ROSC clock to make ARM timings unpredictable
+#define CK_JITTER            0         // Use the ROSC clock to make ARM timings unpredictable
 #endif
 
 
