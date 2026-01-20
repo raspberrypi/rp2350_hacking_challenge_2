@@ -10,6 +10,9 @@ the challenge a bit:
 - We've removed the jitter which impacts the trace timing (Setting RC_JITTER, SH_JITTER and CK_JITTER to 0)
 - We've added an emulated version of the AES implementation to make building virtual power-analysis setups easier
 
+To give you a little more time to keep hacking, we’re extending the challenge to April 30th 2026.
+The prize remains unchanged at $20,000.
+
 ## Update October 31st 2025
 We've not received a winning submission yet, but we know of some teams and individuals still working on the challenge so we've decided to extend the deadline for submissions till the end of 2025. The prize remains unchanged at $20,000.  
 Happy hacking!
