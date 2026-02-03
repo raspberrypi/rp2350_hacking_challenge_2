@@ -2,7 +2,7 @@
 
 Welcome to the *second* Raspberry Pi RP2350 hacking challenge!
 
-## Update January 20st 2026
+## Updated February 3rd 2026
 As we've not received a winning submission AND know that some people are still working on the challenge we've decided to evolve
 the challenge a bit:
 
